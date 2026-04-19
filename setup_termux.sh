@@ -4,21 +4,19 @@
 pkg update -y
 pkg upgrade -y
 
-apt install -y git clang
-apt install -y python
-apt install -y libzmq
-apt install -y rust
+pkg install git clang -y
+pkg install -y python
+pkg install -y libzmq
+pkg install -y rust
 pkg install -y binutils
 pip install maturin
-apt install -y cmake
+pkg install -y cmake
 pip install pyzmq
 
-_file="$(find $PREFIX/lib/python3.12 -name "_sysconfigdata*.py")"
-rm -rf $PREFIX/lib/python3.12/__pycache__
+_file="$(find $PREFIX/lib/python3.13 -name "_sysconfigdata*.py")"
+rm -rf $PREFIX/lib/python3.13/__pycache__
 cp "$_file" "$_file".backup
 sed -i 's|-fno-openmp-implicit-rpath||g' "$_file"
 
+pkg install -y python-psutil
 pip install jupyter
-pkg install -y patchelf
-patchelf --add-needed libpython3.12.so /data/data/com.termux/files/usr/lib/python3.12/site-packages/zmq/backend/cython/_zmq.cpython-312.so
-pkg install -y matplotlib
